@@ -2,6 +2,7 @@
     "name": "php-laravel-blade-syntax",
     "displayName": "PHP Laravel Blade Syntax",
     "description": "Adds Blade syntax highlighting to PHP files",
+    "publisher": "igoralentyev",
     "version": "1.0.0",
     "icon": "images/icon.png",
     "repository": {
