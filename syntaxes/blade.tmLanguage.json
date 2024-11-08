@@ -1,0 +1,68 @@
+{
+    "scopeName": "text.html.php.blade",
+    "patterns": [
+      {
+        "include": "source.php"
+      },
+      {
+        "name": "blade.expression",
+        "begin": "\\{\\{",
+        "end": "\\}\\}",
+        "patterns": [
+          {
+            "include": "source.php"
+          }
+        ]
+      },
+      {
+        "name": "blade.escaped_expression",
+        "begin": "\\{!!",
+        "end": "!!\\}",
+        "patterns": [
+          {
+            "include": "source.php"
+          }
+        ]
+      },
+      {
+        "name": "blade.comment",
+        "begin": "\\{{--",
+        "end": "--\\}\\}",
+        "patterns": []
+      },
+      {
+        "name": "blade.directive.block",
+        "begin": "@(if|foreach|for|while|switch|section|isset)",
+        "end": "@end(?:if|foreach|for|while|switch|section|isset)",
+        "beginCaptures": {
+          "0": {
+            "name": "keyword.control.blade"
+          }
+        },
+        "endCaptures": {
+          "0": {
+            "name": "keyword.control.blade"
+          }
+        },
+        "patterns": [
+          {
+            "include": "source.php"
+          }
+        ]
+      },
+      {
+        "name": "blade.directive.inline",
+        "match": "@[a-zA-Z_][a-zA-Z0-9_]*",
+        "captures": {
+          "0": {
+            "name": "keyword.control.blade"
+          }
+        }
+      }
+    ],
+    "repository": {},
+    "fileTypes": ["php"],
+    "injectionSelector": "source.php",
+    "uuid": "blade-syntax-highlight"
+  }
+  

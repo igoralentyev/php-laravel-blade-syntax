@@ -1,0 +1,49 @@
+{
+    "name": "php-laravel-blade-syntax",
+    "displayName": "PHP Laravel Blade Syntax",
+    "description": "Adds Blade syntax highlighting to PHP files",
+    "version": "1.0.0",
+    "icon": "images/icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/igoralentyev/php-laravel-blade-syntax.git"
+    },
+    "engines": {
+        "vscode": "*"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "php",
+                "aliases": [
+                    "PHP",
+                    "php"
+                ],
+                "extensions": [
+                    ".php"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "php",
+                "scopeName": "text.html.php.blade",
+                "path": "./syntaxes/blade.tmLanguage.json",
+                "injectTo": [
+                    "source.php"
+                ]
+            }
+        ],
+        "configurationDefaults": {
+            "[php]": {
+                "editor.quickSuggestions": {
+                    "strings": true
+                }
+            }
+        }
+    }
+}
