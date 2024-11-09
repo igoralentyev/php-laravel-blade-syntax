@@ -1,68 +1,190 @@
 {
-    "scopeName": "text.html.php.blade",
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "scopeName": "source.php.blade",
+    "name": "Blade",
+    "injectionSelector": "L:text.html.php - (meta.embedded | meta.tag | comment.block.blade)",
     "patterns": [
-      {
-        "include": "source.php"
-      },
-      {
-        "name": "blade.expression",
-        "begin": "\\{\\{",
-        "end": "\\}\\}",
-        "patterns": [
-          {
-            "include": "source.php"
-          }
-        ]
-      },
-      {
-        "name": "blade.escaped_expression",
-        "begin": "\\{!!",
-        "end": "!!\\}",
-        "patterns": [
-          {
-            "include": "source.php"
-          }
-        ]
-      },
-      {
-        "name": "blade.comment",
-        "begin": "\\{{--",
-        "end": "--\\}\\}",
-        "patterns": []
-      },
-      {
-        "name": "blade.directive.block",
-        "begin": "@(if|foreach|for|while|switch|section|isset)",
-        "end": "@end(?:if|foreach|for|while|switch|section|isset)",
-        "beginCaptures": {
-          "0": {
-            "name": "keyword.control.blade"
-          }
-        },
-        "endCaptures": {
-          "0": {
-            "name": "keyword.control.blade"
-          }
-        },
-        "patterns": [
-          {
-            "include": "source.php"
-          }
-        ]
-      },
-      {
-        "name": "blade.directive.inline",
-        "match": "@[a-zA-Z_][a-zA-Z0-9_]*",
-        "captures": {
-          "0": {
-            "name": "keyword.control.blade"
-          }
+        {
+            "include": "#blade"
         }
-      }
     ],
-    "repository": {},
-    "fileTypes": ["php"],
-    "injectionSelector": "source.php",
-    "uuid": "blade-syntax-highlight"
-  }
-  
+    "repository": {
+        "balance_brackets": {
+            "patterns": [
+                {
+                    "begin": "\\(",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.group.begin.php"
+                        }
+                    },
+                    "end": "\\)",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.group.end.php"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#balance_brackets"
+                        },
+                        {
+                            "include": "source.php"
+                        }
+                    ]
+                },
+                {
+                    "include": "source.php"
+                }
+            ]
+        },
+        "blade": {
+            "patterns": [
+                {
+                    "begin": "(@)(if|foreach|for|while|switch|isset|empty|unless|auth|guest|can|cannot)\\s*\\(",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.section.embedded.begin.php"
+                        },
+                        "2": {
+                            "name": "keyword.control.blade"
+                        }
+                    },
+                    "end": "\\)",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.embedded.end.php"
+                        }
+                    },
+                    "name": "text.html.php",
+                    "patterns": [
+                        {
+                            "include": "source.php"
+                        }
+                    ]
+                },
+                {
+                    "begin": "\\{{--",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.begin.blade"
+                        }
+                    },
+                    "end": "--\\}\\}",
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.definition.comment.end.blade"
+                        }
+                    },
+                    "name": "comment.block.blade",
+                    "patterns": []
+                },
+                {
+                    "begin": "(?<!@){{{",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "support.function.construct.begin.blade"
+                        }
+                    },
+                    "contentName": "source.php",
+                    "end": "}}}",
+                    "endCaptures": {
+                        "0": {
+                            "name": "support.function.construct.end.blade"
+                        }
+                    },
+                    "name": "meta.function.echo.blade",
+                    "patterns": [
+                        {
+                            "include": "source.php"
+                        }
+                    ]
+                },
+                {
+                    "begin": "(?<![@{]){{",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "support.function.construct.begin.blade"
+                        }
+                    },
+                    "contentName": "source.php",
+                    "end": "}}",
+                    "endCaptures": {
+                        "0": {
+                            "name": "support.function.construct.end.blade"
+                        }
+                    },
+                    "name": "meta.function.echo.blade",
+                    "patterns": [
+                        {
+                            "include": "source.php"
+                        }
+                    ]
+                },
+                {
+                    "begin": "(?<!@){!!",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "support.function.construct.begin.blade"
+                        }
+                    },
+                    "contentName": "source.php",
+                    "end": "!!}",
+                    "endCaptures": {
+                        "0": {
+                            "name": "support.function.construct.end.blade"
+                        }
+                    },
+                    "name": "meta.function.echo.blade",
+                    "patterns": [
+                        {
+                            "include": "source.php"
+                        }
+                    ]
+                },
+                {
+                    "match": "(?<![A-Za-z0-9_@]) @(?:append|break|continue|csrf|default|each|else|overwrite|parent|sectionMissing|show|stack|stop|livewireStyles|livewireScripts)\\b",
+                    "name": "keyword.control.blade"
+                },
+                {
+                    "match": "(?<![A-Za-z0-9_@]) @(end)?(?:auth|can|cannot|component|empty|error|for|foreach|forelse|guest|if|isset|lang|prepend|push|section|slot|switch|unless|verbatim|while|task|story|finished|production|env|once)\\b",
+                    "name": "keyword.control.blade"
+                },
+                {
+                    "begin": "(?<![A-Za-z0-9_@])@php\\b",
+                    "end": "(?<![A-Za-z0-9_@])@endphp\\b",
+                    "beginCaptures": {
+                        "0": {
+                            "name": "punctuation.section.embedded.begin.php"
+                        }
+                    },
+                    "endCaptures": {
+                        "0": {
+                            "name": "punctuation.section.embedded.end.php"
+                        }
+                    },
+                    "name": "meta.embedded.block.blade",
+                    "patterns": [
+                        {
+                            "include": "source.php"
+                        }
+                    ]
+                },
+                {
+                    "match": "(?<![A-Za-z0-9_@])@endphp\\b",
+                    "name": "punctuation.section.embedded.end.php"
+                },
+                {
+                    "begin": "(?<![A-Za-z0-9_@])(@\\w+)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "entity.name.function.blade"
+                        }
+                    },
+                    "end": "(?=\\s|$)",
+                    "patterns": []
+                }
+            ]
+        }
+    }
+}
